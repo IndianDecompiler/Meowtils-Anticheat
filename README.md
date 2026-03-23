@@ -8,7 +8,7 @@ This mod is a decompiled and remade version of the anticheat module from the Meo
 ## Credits
 * Author: tatp, IndianOP
 * Original Author: tatp (Meowtils Creator)
-* Source: https://github.com/femboytatp/meowtils
+* Original Mod: https://github.com/femboytatp/meowtils
 
 ---
 Note: I do not claim ownership of the original algorithms.
