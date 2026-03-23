@@ -1,0 +1,16 @@
+[
+{
+  "modid": "anticheat",
+  "name": "Anticheat",
+  "description": "A client-side Minecraft mod to detect and flag other cheaters.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["tatp"],
+  "credits": "tatp",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

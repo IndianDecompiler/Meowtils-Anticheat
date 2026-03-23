@@ -1,0 +1,75 @@
+/*
+ * Author: tatp
+ * Original sourced from: Meowtils 
+ * https://github.com/femboytatp/meowtils
+ */
+package com.anticheat.core;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+
+public class PlayerData {
+    public double speed;
+    public int aboveVoidTicks;
+    public int fastTick;
+    public int autoBlockTicks;
+    public int ticksExisted;
+    public int lastSneakTick;
+    public double posZ;
+    public int sneakTicks;
+    public int noSlowTicks;
+    public double posY;
+    public boolean sneaking;
+    public double posX;
+    private int resetTick;
+
+    public void update(EntityPlayer entityPlayer) {
+        int ticksExisted = entityPlayer.ticksExisted;
+        this.posX = entityPlayer.posX - entityPlayer.lastTickPosX;
+        this.posY = entityPlayer.posY - entityPlayer.lastTickPosY;
+        this.posZ = entityPlayer.posZ - entityPlayer.lastTickPosZ;
+        this.speed = Math.max(Math.abs(this.posX), Math.abs(this.posZ));
+        
+        if (ticksExisted - this.resetTick >= 20) {
+            this.fastTick = 0;
+            this.resetTick = ticksExisted;
+        }
+
+        if (this.speed >= 0.3) {
+            this.fastTick++;
+            this.ticksExisted = ticksExisted;
+        } else {
+            this.fastTick = 0;
+        }
+
+        if (Math.abs(this.posY) >= 0.1) {
+            this.aboveVoidTicks = ticksExisted;
+        }
+
+        if (entityPlayer.isSneaking()) {
+            this.lastSneakTick = ticksExisted;
+        }
+
+        if (entityPlayer.isSwingInProgress && entityPlayer.isBlocking()) {
+            this.autoBlockTicks++;
+        } else {
+            this.autoBlockTicks = 0;
+        }
+
+        if (entityPlayer.isSprinting() && entityPlayer.isUsingItem()) {
+            this.noSlowTicks++;
+        } else {
+            this.noSlowTicks = 0;
+        }
+
+        if (!(entityPlayer.rotationPitch >= 70.0F) || entityPlayer.getHeldItem() == null || !(entityPlayer.getHeldItem().getItem() instanceof ItemBlock)) {
+            this.sneakTicks = 0;
+        } else if (entityPlayer.swingProgressInt == 1) {
+            if (!this.sneaking && entityPlayer.isSneaking()) {
+                this.sneakTicks++;
+            } else {
+                this.sneakTicks = 0;
+            }
+        }
+    }
+}
